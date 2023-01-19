@@ -1,0 +1,82 @@
+{% include'admin/cabecera.html' %}
+<br/>
+<br/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+           <div class="card">
+                <div class="card-header">
+                    Datos del Producto
+                </div>
+                <div class="card-body">
+                    <form action="/admin/productos/guardar" method="post" enctype="multipart/form-data">
+                             <div class="mb-3">
+                                <label for="txtNombre" class="form-label">Producto:</label>
+                                 <input type="text" class="form-control" name="txtNombre" id="txtNombre" aria-describedby="helpId" placeholder="Ingrese nombre del producto">
+                            </div>
+
+                           <div class="mb-3">
+                                <label for="txtDescripcion" class="form-label">Descripcion:</label>
+                                 <input type="text" class="form-control" name="txtDescripcion" id="txtDescripcion" aria-describedby="helpId" placeholder="Ingrese la descripcion del producto">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="txtImagen" class="form-label">Imagen:</label>
+                                <input type="file" class="form-control" name="txtImagen" id="txtImagen" aria-describedby="helpId" placeholder="Seleccione la imagen">
+                            </div>
+
+                             <div class="mb-3">
+                                <label for="txtURL" class="form-label">URL:</label>
+                                <input type="text" class="form-control" name="txtURL" id="txtURL" aria-describedby="helpId" placeholder="Ingrese la URL">
+                             </div>
+
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Pie
+                </div>
+           </div>
+        </div>
+        <div class="col-md-7">
+            <table    class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Imagen</th>
+                    <th>URL</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                        <tr>
+                                <td>{{ producto[0] }}</td>
+                                <td>{{ producto[1] }}</td>
+                                <td>{{ producto[2] }}</td>
+                                <td>
+                                    <img width="60%" src = "/img/{{ producto[3] }}" class="img-fluid rounded-top" alt="">
+                                </td>
+                                <td>
+
+                                    <a name="" id="" class="btn btn-success" href="{{ producto[4] }}" role="button">Link</a>
+
+                                </td>
+                                <td>
+                                    <form action="/admin/productos/borrar" method="post">
+                                    <input value="{{ producto[0] }}" type="hidden" name="txtID" id="txtID"/>
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                    </form>
+                                </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+{% include'admin/pie.html' %}
