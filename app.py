@@ -73,7 +73,7 @@ def admin_login_post():
     _password = request.form['txtPassword']
     print(_usuario, _password)
 
-    if .
+    if _usuario == "admin" and _password == "Gr$Te#v491":
         session["login"] = True
         session["usuario"] = "Administrador"
         return redirect("/admin")
