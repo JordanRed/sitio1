@@ -11,8 +11,8 @@ app.secret_key="sublimatic"
 mysql = MySQL()
 
 app.config['MYSQL_DATABASE_HOST']='localhost'
-app.config['MYSQL_DATABASE_USER']='eust'
-app.config['MYSQL_DATABASE_PASSWORD']='$0yIO#A381&'
+app.config['MYSQL_DATABASE_USER']='eustaquio'
+app.config['MYSQL_DATABASE_PASSWORD']='$0YDjdfv45'
 app.config['MYSQL_DATABASE_DB']='sitio'
 mysql.init_app(app)
 
@@ -36,11 +36,22 @@ def productos():
 
     conexion=mysql.connect()
     cursor=conexion.cursor()
-    cursor.execute("SELECT * FROM `productos`")
+    cursor.execute("SELECT * FROM `productos`  WHERE img = 0")
     productos=cursor.fetchall()
     conexion.commit()
 
     return render_template('sitio/productos.html', productos=productos)
+
+@app.route('/imagenes')
+def imameges():
+
+    conexion=mysql.connect()
+    cursor=conexion.cursor()
+    cursor.execute("SELECT * FROM `productos` WHERE img = 1")
+    imagenes=cursor.fetchall()
+    conexion.commit()
+
+    return render_template('sitio/imagenes.html', imagenes=imagenes)
 
 @app.route('/nosotros')
 def nosotros():
@@ -62,7 +73,7 @@ def admin_login_post():
     _password = request.form['txtPassword']
     print(_usuario, _password)
 
-    if _usuario == "admin" and _password == "Gr$Te#v491":
+    if .
         session["login"] = True
         session["usuario"] = "Administrador"
         return redirect("/admin")
@@ -93,6 +104,8 @@ def admin_productos():
 @app.route('/admin/productos/guardar', methods=['POST'])
 def admin_productos_guardar():
 
+    _auxImg = 0
+
     if not 'login' in session:
         return redirect("/admin/login")
 
@@ -100,6 +113,12 @@ def admin_productos_guardar():
     _descripcion = request.form['txtDescripcion']
     _url = request.form['txtURL']
     _archivo = request.files['txtImagen']
+    _img2 = request.form.get('chkIMG')
+
+    if _img2 == '1':
+        _auxImg = 1
+    else:
+        _auxImg = 0
 
     tiempo = datetime.now()
     horaActual = tiempo.strftime('%Y%H%M%S')
@@ -107,8 +126,8 @@ def admin_productos_guardar():
         nuevoNombre = horaActual + "_" + _archivo.filename
         _archivo.save("templates/sitio/img/" + nuevoNombre)
 
-    sql='INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `imagen`, `url`) VALUES (NULL, %s, %s, %s, %s); '
-    datos = (_nombre, _descripcion, nuevoNombre, _url)
+    sql='INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `imagen`, `url`, `img`) VALUES (NULL, %s, %s, %s, %s, %s); '
+    datos = (_nombre, _descripcion, nuevoNombre, _url, _auxImg)
     conexion = mysql.connect()
     cursor = conexion.cursor()
     cursor.execute(sql, datos)

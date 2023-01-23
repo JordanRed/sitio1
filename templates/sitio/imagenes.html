@@ -1,0 +1,21 @@
+{% include'sitio/cabecera.html' %}
+<br>
+    <div class="row">
+    {% for producto in imagenes %}
+
+        <div class="col-md-3">
+            <div class="card" style="width: 18rem;">
+                <img height="380"  class="card-img-top" src="/img/{{ producto[3] }}" alt="Card image cap">
+                <div class="card-body">
+                   <h4 class="card-title">{{ producto[1] }}</h4>
+                  <p class="card-text">
+                      {{ producto[2]}}
+                    <!--<a name="" id="" class="btn btn-success" href="{{ producto[4] }}" role="button">Ver</a>-->
+                  </p>
+                </div>
+              </div>
+        </div>
+    {% endfor %}
+    </div>
+
+{% include'sitio/pie.html' %}
