@@ -11,8 +11,8 @@ app.secret_key="sublimatic"
 mysql = MySQL()
 
 app.config['MYSQL_DATABASE_HOST']='localhost'
-app.config['MYSQL_DATABASE_USER']='eustaquio'
-app.config['MYSQL_DATABASE_PASSWORD']='$0YDjdfv45'
+app.config['MYSQL_DATABASE_USER']='user'
+app.config['MYSQL_DATABASE_PASSWORD']='pass'
 app.config['MYSQL_DATABASE_DB']='sitio'
 mysql.init_app(app)
 
